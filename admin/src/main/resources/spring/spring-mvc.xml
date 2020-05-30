@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--启用spring的注解annotation -->
+    <context:annotation-config/>
+    
+    <!-- 添加注解驱动 -->
+    <mvc:annotation-driven />
+
+    <!-- 扫描路径 -->
+    <context:component-scan base-package="com.admin.controller">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 添加视图解析器前后缀 在上边的解析错误时使用 (默认使用html)- -->
+    <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/"/><!--设置JSP文件的目录位置-->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--FreeMarker模板的加载地址、解码方式等设置-->
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+
+        <!--template的加载地址-->
+        <property name="templateLoaderPath" value="/freeMarker/" ></property>
+
+        <!--template的默认编码-->
+        <property name="defaultEncoding" value="utf-8"></property>
+
+    </bean>
+
+    <!--FreeMarker模板的视图解析器-->
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+
+        <!--template的后缀-->
+        <property name="suffix" value=".ftl" ></property>
+
+        <!--生成HTML的contenttype;text/html;charset=utf-8-->
+        <property name="contentType" value="text/html;charset=utf-8"></property>
+
+        <!--优先级-->
+        <property name="order" value="0"/>
+
+    </bean>
+
+</beans>
